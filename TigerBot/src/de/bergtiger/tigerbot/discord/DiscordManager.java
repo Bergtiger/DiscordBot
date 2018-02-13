@@ -11,7 +11,7 @@ public class DiscordManager {
 	private DiscordListenerOverview discordListenerOverview;
 	
 	public DiscordManager(TigerBot plugin) {
-		this.discordConnection = new DiscordConnection();
+		this.discordConnection = new DiscordConnection(plugin);
 		this.discordWriter = new DiscordWriter(plugin);
 		this.discordRole = new DiscordRole(plugin);
 		this.discordListenerOverview = new DiscordListenerOverview(plugin);

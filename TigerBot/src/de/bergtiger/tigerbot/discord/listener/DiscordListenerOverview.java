@@ -9,11 +9,10 @@ public class DiscordListenerOverview extends MyListenerOverview{
 	
 	public DiscordListenerOverview(TigerBot plugin) {
 		this.plugin = plugin;
-		this.initialize();
 	}
 	
 	@Override
-	protected void initialize() {
+	public void initialize() {
 		this.addListener(new ChatListener(this.plugin));
 	}
 }

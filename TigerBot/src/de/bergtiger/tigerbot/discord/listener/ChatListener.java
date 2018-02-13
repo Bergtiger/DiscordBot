@@ -18,14 +18,15 @@ public class ChatListener extends DiscordListener {
 			 * send to spigot server
 			 */
 			if(e.getChannel().getId().equals(MyChannel.CONSOLE_CHANNEL.get())) {
-				this.plugin.getSpigot().getWriter().writeMessage(e.getAuthor() + MyChannel.DISCORD_USER.get(), e.getMessage().getContentDisplay());
+				this.plugin.getSpigot().getWriter().writeMessage(e.getAuthor().getName() + MyChannel.DISCORD_USER.get(), e.getMessage().getContentDisplay());
 				return;
 			}
 			/**
 			 * check for question
 			 */
 			if(e.getChannelType().equals(ChannelType.PRIVATE)) {
-				
+				System.out.println("private");
+				this.plugin.getQuestioner().receivedAnswer(e.getAuthor(), e.getChannel(), e.getMessage().getContentDisplay());
 			}
 		}
 	}

@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 
 import de.bergtiger.tigerbot.TigerBot;
 import de.bergtiger.tigerbot.data.MyChannel;
+import de.bergtiger.tigerbot.data.MyString;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -47,7 +48,9 @@ public abstract class Question {
 
 			@Override
 			public void run() {
-				remove();
+				if(remove()) {
+					plugin.getDiscord().getWriter().write(channel, MyString.QUESTION_TIMEOUT.colored());
+				}
 			}
 			
 		}, MyChannel.QUESTION_DELAY.getLong());
@@ -57,8 +60,8 @@ public abstract class Question {
 	/**
 	 * removes Question from Questioner
 	 */
-	protected void remove() {
-		this.plugin.getQuestioner().removeQuestion(this);
+	protected boolean remove() {
+		return this.plugin.getQuestioner().removeQuestion(this);
 	}
 	
 	/**

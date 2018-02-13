@@ -55,45 +55,49 @@ public class Commands implements CommandExecutor{
 	
 	public void unLock(CommandSender cs, String[] args) {
 		if(cs.hasPermission(MyPermission.ADMIN.get())) {
-			JDA jda = this.plugin.getJDA();
-			if((jda != null) && (jda.getStatus().equals(Status.CONNECTED))) {
-				Guild guild = null;
-				try {
-					guild = jda.getGuildById(args[1]);
-				} catch (Exception e) {
-					List<Guild> guilds = jda.getGuilds();
-					for (int i = 0; i < guilds.size(); i++) {
-						if(guilds.get(i).getName().equalsIgnoreCase(args[1])) {
-							guild = guilds.get(i);
-							break;
-						}
-					}
-				}
-				if(guild != null) {
-					Member member = null;
+			if(args.length == 3) {
+				JDA jda = this.plugin.getJDA();
+				if((jda != null) && (jda.getStatus().equals(Status.CONNECTED))) {
+					Guild guild = null;
 					try {
-						member = guild.getMemberById(args[2]);
+						guild = jda.getGuildById(args[1]);
 					} catch (Exception e) {
-						List<Member> members = guild.getMembers();
-						for (int i = 0; i < members.size(); i++) {
-							if(members.get(i).getUser().getName().equalsIgnoreCase(args[2])) {
-								member = members.get(i);
+						List<Guild> guilds = jda.getGuilds();
+						for (int i = 0; i < guilds.size(); i++) {
+							if(guilds.get(i).getName().equalsIgnoreCase(args[1])) {
+								guild = guilds.get(i);
+								break;
 							}
 						}
 					}
-					if(member != null) {
-						RestAction<PrivateChannel> reaction = member.getUser().openPrivateChannel();
-						PrivateChannel channel = reaction.complete();
-						this.plugin.getDiscord().getWriter().write(channel, MyString.UNLOCK.colored().replace("-member-", cs.getName()));
-						this.plugin.getQuestioner().addQuestion(new UnLockQuestion(this.plugin, guild, channel, member.getUser()));
+					if(guild != null) {
+						Member member = null;
+						try {
+							member = guild.getMemberById(args[2]);
+						} catch (Exception e) {
+							List<Member> members = guild.getMembers();
+							for (int i = 0; i < members.size(); i++) {
+								if(members.get(i).getUser().getName().equalsIgnoreCase(args[2])) {
+									member = members.get(i);
+								}
+							}
+						}
+						if(member != null) {
+							RestAction<PrivateChannel> reaction = member.getUser().openPrivateChannel();
+							PrivateChannel channel = reaction.complete();
+							this.plugin.getDiscord().getWriter().write(channel, MyString.UNLOCK_Question.colored().replace("-member-", cs.getName()));
+							this.plugin.getQuestioner().addQuestion(new UnLockQuestion(this.plugin, guild, channel, member.getUser()));
+						} else {
+							cs.sendMessage(MyString.NOMEMBER.colored().replace("-member-", args[2]));
+						}
 					} else {
-						cs.sendMessage(MyString.NOMEMBER.colored().replace("-member-", args[2]));
+						cs.sendMessage(MyString.NOGUILD.colored().replace("-guild-", args[1]));
 					}
 				} else {
-					cs.sendMessage(MyString.NOGUILD.colored().replace("-guild-", args[1]));
+					cs.sendMessage(MyString.NOCONNECTION.colored());
 				}
 			} else {
-				cs.sendMessage(MyString.NOCONNECTION.colored());
+				cs.sendMessage(MyString.UNLOCK_HELP.colored());
 			}
 		} else {
 			cs.sendMessage(MyString.NOPERMISSION.colored());

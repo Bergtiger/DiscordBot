@@ -9,6 +9,7 @@ public class SpigotListenerOverview extends MyListenerOverview {
 	
 	public SpigotListenerOverview(TigerBot plugin) {
 		this.plugin = plugin;
+		this.initialize();
 	}
 	
 	@Override
