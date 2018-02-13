@@ -36,6 +36,7 @@ public enum MyString {
 	QUESTION_ABORT	("&cit is too late."),
 	QUESTION_ERROR	("&cThere was an error. Please retry."),
 	QUESTION_UNLOCK_ACCEPTED	("&aYou have accepted."),
+	QUESTION_UNLOCK_DENY		("&cYou have denied."),
 	QUESTION_UNLOCK_ALREADY		("&cYou are already unlocked.");
 	
 	private String args;

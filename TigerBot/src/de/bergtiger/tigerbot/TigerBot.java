@@ -2,6 +2,7 @@ package de.bergtiger.tigerbot;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import de.bergtiger.tigerbot.data.question.Questioner;
 import de.bergtiger.tigerbot.discord.DiscordManager;
 import de.bergtiger.tigerbot.spigot.SpigotManager;
 import net.dv8tion.jda.core.JDA;
@@ -10,11 +11,13 @@ public class TigerBot extends JavaPlugin {
 	
 	private DiscordManager discordManager;
 	private SpigotManager spigotManager;
+	private Questioner questioner;
 	
 	@Override
 	public void onEnable() {
 		this.discordManager = new DiscordManager(this);
 		this.spigotManager = new SpigotManager(this);
+		this.questioner = new Questioner();
 		
 		if(this.getDiscord().getConnection().connection()) {
 			this.getDiscord().getListener().register();
@@ -39,5 +42,9 @@ public class TigerBot extends JavaPlugin {
 	
 	public SpigotManager getSpigot() {
 		return this.spigotManager;
+	}
+	
+	public Questioner getQuestioner() {
+		return this.questioner;
 	}
 }

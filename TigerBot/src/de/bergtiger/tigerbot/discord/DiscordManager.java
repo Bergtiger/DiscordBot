@@ -13,7 +13,7 @@ public class DiscordManager {
 	public DiscordManager(TigerBot plugin) {
 		this.discordConnection = new DiscordConnection();
 		this.discordWriter = new DiscordWriter(plugin);
-		this.discordRole = new DiscordRole();
+		this.discordRole = new DiscordRole(plugin);
 		this.discordListenerOverview = new DiscordListenerOverview(plugin);
 	}
 	
