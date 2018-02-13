@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import de.bergtiger.tigerbot.data.question.Questioner;
 import de.bergtiger.tigerbot.discord.DiscordManager;
+import de.bergtiger.tigerbot.ki.KIMain;
 import de.bergtiger.tigerbot.spigot.SpigotManager;
 import de.bergtiger.tigerbot.spigot.commands.Commands;
 import net.dv8tion.jda.core.JDA;
@@ -14,6 +15,7 @@ public class TigerBot extends JavaPlugin {
 	private SpigotManager spigotManager;
 	private Questioner questioner;
 	private Commands commands;
+	private KIMain kiMain;
 	
 	@Override
 	public void onEnable() {
@@ -21,6 +23,7 @@ public class TigerBot extends JavaPlugin {
 		this.spigotManager = new SpigotManager(this);
 		this.questioner = new Questioner(this);
 		this.commands = new Commands(this);
+		this.kiMain = new KIMain(this);
 		
 		this.getCommand("tigerbot").setExecutor(this.commands);
 		
@@ -53,5 +56,9 @@ public class TigerBot extends JavaPlugin {
 	
 	public Questioner getQuestioner() {
 		return this.questioner;
+	}
+	
+	public KIMain getKI() {
+		return this.kiMain;
 	}
 }

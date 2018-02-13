@@ -25,8 +25,8 @@ public class ChatListener extends DiscordListener {
 			 * check for question
 			 */
 			if(e.getChannelType().equals(ChannelType.PRIVATE)) {
-				System.out.println("private");
 				this.plugin.getQuestioner().receivedAnswer(e.getAuthor(), e.getChannel(), e.getMessage().getContentDisplay());
+				this.plugin.getKI().receiveMessage(e.getChannel(), e.getAuthor(), e.getMessage().getContentDisplay());
 			}
 		}
 	}
